@@ -85,18 +85,25 @@ if __name__=='__main__':
         image = Image.open(image_file)
         st.image(image, caption="Immagine caricata", use_container_width=True)
     
-    if patient_name and image_file:
+    if 'calendar_generated' not in st.session_state:
+        st.session_state['calendar_generated'] = False
+
+    if patient_name and image_file and not st.session_state['calendar_generated']:
         with st.spinner("Caricamento del Calendario Farmacologico..."):
             df, excel_filename = create_med_plan_from_img(patient_name, image_file)
+            st.session_state['calendar_generated'] = True
+            st.session_state['df'] = df
+            st.session_state['excel_filename'] = excel_filename
 
+    if st.session_state['calendar_generated']:
         st.success(f"Il Calendario Farmacologico per {patient_name} è stato generato con successo!")
-
         st.write(f"Dettagli della terapia per {patient_name}:")
-        st.dataframe(df)
+        st.dataframe(st.session_state['df'])
 
         st.download_button(
             label="Scarica il Calendario Farmacologico",
-            data=open(excel_filename, "rb").read(),
-            file_name=excel_filename,
+            data=open(st.session_state['excel_filename'], "rb").read(),
+            file_name=st.session_state['excel_filename'],
             mime="application/vnd.ms-excel"
         )
+
