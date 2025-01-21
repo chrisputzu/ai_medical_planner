@@ -107,4 +107,6 @@ if __name__=='__main__':
             file_name=st.session_state['excel_filename'],
             mime="application/vnd.ms-excel"
         )
+        
+#! implementare bottone cancella dati campi e reload pagina
 
