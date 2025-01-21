@@ -72,7 +72,7 @@ def create_med_plan_from_img(patient_name, image_file):
 
 if __name__=='__main__':
     load_dotenv(".env")
-    google_api_key = os.getenv("GOOGLE_API_KEY")
+    google_api_key = st.secrets["google"]["api_key"]
     genai.configure(api_key=google_api_key)
     
     st.set_page_config(page_title="Generatore Calendario Farmacologico", page_icon="🩺")
