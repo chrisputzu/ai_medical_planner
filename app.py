@@ -72,7 +72,7 @@ def create_med_plan_from_img(patient_name, image_file):
 
 if __name__=='__main__':
     load_dotenv(".env")
-    # google_api_key = os.getenv("GOOGLE_API_KE")
+    # google_api_key = os.getenv("GOOGLE_API_KEY")
     google_api_key = st.secrets["google"]["api_key"]
     genai.configure(api_key=google_api_key)
     
@@ -107,6 +107,4 @@ if __name__=='__main__':
             file_name=st.session_state['excel_filename'],
             mime="application/vnd.ms-excel"
         )
-        
-#! implementare bottone cancella dati campi e reload pagina
 
